@@ -52,7 +52,7 @@ def calculate_recommendations(student_marks, df_courses, vectors_courses, vocabu
         if course_name in student_marks:
             continue
 
-        # подготавливаем значения для рассчета кос. расстояния
+        # Подготавливаем значения для рассчета кос. Расстояния
         dot_product = np.dot(course_vector, student_vector)
         norm_course = np.linalg.norm(course_vector)
         norm_student = np.linalg.norm(student_vector)
@@ -61,7 +61,7 @@ def calculate_recommendations(student_marks, df_courses, vectors_courses, vocabu
         if norm_course == 0 or norm_student == 0: similarity = 0.0
         else: similarity = dot_product / (norm_course * norm_student)
 
-        # Если все хорошо добавляем наш курс и его степень схожести (уровень рекомендаций)
+        # Если все хорошо добавляем наш курс и его степень схожести
         course_name = df_courses.iloc[i]['Course']
         recommendations.append([course_name, similarity])
 

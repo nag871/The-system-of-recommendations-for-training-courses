@@ -1,16 +1,18 @@
-import ast
-
-import pandas as pd
-
+import data_loader
 import recommender
 import graphics
 
-# Загружаем наши таблицы
-df_courses = pd.read_csv('../CSVs/Courses.csv')
-df_students = pd.read_csv('../CSVs/Students.csv')
-df_students['Marks'] = df_students['Marks'].apply(ast.literal_eval) # Превращаем оценки в массив
 
-vectors_courses, vocabulary = recommender.build_course_matrix(df_courses) # Создаем матрицу из векторов курсов
+# Загружаем наши таблицы
+df_courses = data_loader.load_courses_data()
+df_students = data_loader.load_students_data()
+
+if df_courses is None or df_students is None:
+        print("The program cannot be started due to an I/O error.")
+        exit()
+
+# Создаем матрицу из векторов курсов
+vectors_courses, vocabulary = recommender.build_course_matrix(df_courses)
 all_recommendations = {}
 
 # Вычисляем рекомендации для определенного студента и добавляем в словарь вида {ФИО: [список рекомендаций]}
